@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html ng-app="app">
+
+<head>
+    <title>Two-Way Binding Example</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+    <script src="app.js" defer></script>
+</head>
+
+<body ng-controller="FormController" style="font-family: Arial, sans-serif; text-align: center;">
+
+    <h1>Two-Way Binding Example</h1>
+    <form>
+        <label for="name">Name:</label>
+        <input type="text" id="name" ng-model="user.name">
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" ng-model="user.email">
+
+        <label for="message">Message:</label>
+        <textarea id="message" ng-model="user.message"></textarea>
+
+        <button type="button" ng-click="submitForm()">Submit</button>
+    </form>
+
+    <h2>Form Data:</h2>
+    <p>Name: {{user.name}}</p>
+    <p>Email: {{user.email}}</p>
+    <p>Message: {{user.message}}</p>
+
+</body>
+
+</html>
