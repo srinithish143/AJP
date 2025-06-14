@@ -1,0 +1,7 @@
+.btn-primary { background-color: #450027; }
+.btn-primary:hover { background-color: #29637A; }
+.btn-warning { background-color: #450027; }
+
+label, h2 { color: #29637A; }
+.well { color: #840044; }
+input { color: #450027; }
