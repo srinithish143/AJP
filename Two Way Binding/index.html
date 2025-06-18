@@ -2,13 +2,35 @@
 <html ng-app="app">
 
 <head>
+    <meta charset="UTF-8">
     <title>Two-Way Binding Example</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
-    <script src="app.js" defer></script>
+    <script src="app.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input,
+        textarea {
+            width: 300px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin-top: 10px;
+        }
+    </style>
 </head>
 
-<body ng-controller="FormController" style="font-family: Arial, sans-serif; text-align: center;">
-
+<body ng-controller="FormController">
     <h1>Two-Way Binding Example</h1>
     <form>
         <label for="name">Name:</label>
@@ -27,7 +49,6 @@
     <p>Name: {{user.name}}</p>
     <p>Email: {{user.email}}</p>
     <p>Message: {{user.message}}</p>
-
 </body>
 
 </html>
