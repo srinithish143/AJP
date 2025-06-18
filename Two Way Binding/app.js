@@ -1,12 +1,9 @@
 angular.module('app', [])
     .controller('FormController', ['$scope', function ($scope) {
-        $scope.user = {
-            name: "",
-            email: "",
-            message: ""
-        }; // Initialize user object to prevent undefined values
+        $scope.user = {}; // Object to store form data
 
         $scope.submitForm = function () {
             alert('Form submitted successfully!');
+            console.log($scope.user); // Optional debugging
         };
     }]);
