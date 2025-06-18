@@ -1,32 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html ng-app="app">
 <head>
-    <meta charset="UTF-8">
-    <title>Guess the Number</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <title>Guess the Number</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+  <style>
+    .btn-primary { background-color: #450027; }
+    .btn-primary:hover { background-color: #29637A; }
+    .btn-warning { background-color: #450027; }
+    label, h2 { color: #29637A; }
+    .well { color: #840044; }
+    input { color: #450027; }
+  </style>
 </head>
 
-<body ng-app="app">
-    <div class="container" ng-controller="GuessTheNumberController">
-        <h2>Guess the Number!</h2>
-        <div class="well">Guess the computer-generated random number between 1 and 1000.</div>
-        <label>Your Guess: </label>
-        <input type="number" ng-model="guess" />
-        <button ng-click="verifyGuess()" class="btn btn-primary btn-sm">Verify</button>
-        <button ng-click="initializeGame()" class="btn btn-warning btn-sm">Restart</button>
-
-        <p>
-        <p ng-show="deviation < 0" class="alert alert-warning">Your guess is higher.</p>
-        <p ng-show="deviation > 0" class="alert alert-warning">Your guess is lower.</p>
-        <p ng-show="deviation === 0" class="alert alert-success">Yes! That's it.</p>
-        </p>
-
-        <p class="text-info">No of guesses: <span class="badge">{{noOfTries}}</span></p>
+<body>
+  <div class="container" ng-controller="GuessTheNumberController">
+    <h2>Guess the Number!</h2>
+    <div class="well">
+      Guess the computer-generated random number between 1 and 1000.
     </div>
-</body>
-<script src="guessTheNumber.js"></script>
 
+    <label>Your Guess: </label>
+    <input type="number" ng-model="guess" class="form-control" />
+    <br>
+    <button ng-click="verifyGuess()" class="btn btn-primary btn-sm">Verify</button>
+    <button ng-click="initializeGame()" class="btn btn-warning btn-sm">Restart</button>
+
+    <br><br>
+    <p ng-show="deviation < 0" class="alert alert-warning">Your guess is higher.</p>
+    <p ng-show="deviation > 0" class="alert alert-warning">Your guess is lower.</p>
+    <p ng-show="deviation === 0" class="alert alert-success">Yes! That's it.</p>
+
+    <p class="text-info">No of guesses: <span class="badge">{{noOfTries}}</span></p>
+  </div>
+
+  <script>
+    angular.module('app', [])
+    .controller('GuessTheNumberController', function($scope) {
+      $scope.verifyGuess = function () {
+        $scope.deviation = $scope.original - $scope.guess;
+        $scope.noOfTries += 1;
+      };
+
+      $scope.initializeGame = function () {
+        $scope.noOfTries = 0;
+        $scope.original = Math.floor((Math.random() * 100) + 1);
+        $scope.guess = null;
+        $scope.deviation = null;
+      };
+
+      $scope.initializeGame();
+    });
+  </script>
+</body>
 </html>
