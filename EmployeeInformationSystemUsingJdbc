@@ -1,0 +1,117 @@
+package employee.information.system.using.jdbc;
+import java.sql.*;
+import java.io.*;
+
+public class EmployeeInformationSystemUsingJdbc {
+
+    void createTable() {
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "admin");
+            Statement stmt = con.createStatement();
+
+            String sql = "CREATE TABLE stud1 (" +
+                         "stud_id NUMBER PRIMARY KEY, " +
+                         "stud_name VARCHAR2(50), " +
+                         "department VARCHAR2(50))";
+
+            stmt.executeUpdate(sql);
+            System.out.println("Table 'stud1' created successfully.");
+            stmt.close();
+            con.close();
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 955) {
+                System.out.println("Table already exists. Skipping creation.");
+            } else {
+                System.out.println("SQL Error: " + e);
+            }
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    void insert() {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "admin");
+
+            PreparedStatement pst = con.prepareStatement("INSERT INTO stud1 VALUES (?, ?, ?)");
+
+            System.out.println("Enter the studId:");
+            int id = Integer.parseInt(br.readLine());
+            System.out.println("Enter the studName:");
+            String name = br.readLine();
+            System.out.println("Enter the Department:");
+            String dept = br.readLine();
+
+            pst.setInt(1, id);
+            pst.setString(2, name);
+            pst.setString(3, dept);
+            pst.executeUpdate();
+
+            System.out.println("Record Inserted");
+            pst.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    void select() {
+        try {
+            BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "system", "admin");
+
+            PreparedStatement pst = con.prepareStatement("SELECT * FROM stud1 WHERE stud_id = ?");
+            System.out.println("Enter the studId to search:");
+            int id = Integer.parseInt(br.readLine());
+
+            pst.setInt(1, id);
+            ResultSet rs = pst.executeQuery();
+
+            System.out.println("StudId\tStudName\tDepartment");
+            while (rs.next()) {
+                System.out.println(rs.getInt(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3));
+            }
+
+            rs.close();
+            pst.close();
+            con.close();
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+        EmployeeInformationSystemUsingJdbc db = new EmployeeInformationSystemUsingJdbc();
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        char choice;
+
+        db.createTable(); // Call once at startup
+
+        do {
+            System.out.println("\n1. Insert\n2. Select\n3. Exit");
+            System.out.println("Enter your choice:");
+            int ch = Integer.parseInt(br.readLine());
+
+            switch (ch) {
+                case 1:
+                    db.insert();
+                    break;
+                case 2:
+                    db.select();
+                    break;
+                case 3:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+
+            System.out.println("Do you want to continue (y/n)?");
+            choice = br.readLine().charAt(0);
+        } while (choice == 'y' || choice == 'Y');
+    }
+}
