@@ -1,54 +1,49 @@
 <!DOCTYPE html>
-<html ng-app="app">
+<html>
 
 <head>
-    <meta charset="UTF-8">
     <title>Two-Way Binding Example</title>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
-    <script src="app.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 30px;
-        }
-
-        label {
-            display: block;
-            margin-top: 10px;
-        }
-
-        input,
-        textarea {
-            width: 300px;
-            padding: 5px;
-            margin-bottom: 10px;
-        }
-
-        button {
-            margin-top: 10px;
-        }
-    </style>
 </head>
 
-<body ng-controller="FormController">
-    <h1>Two-Way Binding Example</h1>
-    <form>
-        <label for="name">Name:</label>
-        <input type="text" id="name" ng-model="user.name">
+<body style="font-family: Arial, sans-serif; text-align: center;">
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" ng-model="user.email">
+    <div ng-app="app" ng-controller="FormController">
+        <h1>Two-Way Binding Example</h1>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" ng-model="user.name">
 
-        <label for="message">Message:</label>
-        <textarea id="message" ng-model="user.message"></textarea>
+            <label for="email">Email:</label>
+            <input type="email" id="email" ng-model="user.email">
 
-        <button type="button" ng-click="submitForm()">Submit</button>
-    </form>
+            <label for="message">Message:</label>
+            <textarea id="message" ng-model="user.message"></textarea>
 
-    <h2>Form Data:</h2>
-    <p>Name: {{user.name}}</p>
-    <p>Email: {{user.email}}</p>
-    <p>Message: {{user.message}}</p>
+            <button type="button" ng-click="submitForm()">Submit</button>
+        </form>
+
+        <h2>Form Data:</h2>
+        <p>Name: {{user.name}}</p>
+        <p>Email: {{user.email}}</p>
+        <p>Message: {{user.message}}</p>
+    </div>
+
+    <script>
+        angular.module('app', [])
+            .controller('FormController', ['$scope', function ($scope) {
+                $scope.user = {
+                    name: "",
+                    email: "",
+                    message: ""
+                };
+
+                $scope.submitForm = function () {
+                    alert('Form submitted successfully!');
+                };
+            }]);
+    </script>
+
 </body>
 
 </html>
